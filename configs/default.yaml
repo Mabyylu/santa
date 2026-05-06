@@ -1,0 +1,48 @@
+# QAP-SA Configuration File
+# Quantized Action Primitives with Semantic Addressing
+
+model:
+  # Architecture parameters
+  visual_output_dim: 512
+  language_output_dim: 512
+  action_dim: 7          # [x, y, z, qx, qy, qz, qw]
+  hash_bits: 12          # 2^12 = 4096 action primitives
+  num_gaussians: 3       # Mixture components for action decoding
+  vocab_size: 10000
+  image_size: 128
+
+training:
+  # Optimization
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  num_epochs: 50
+  warmup_epochs: 5
+  
+  # Loss weights
+  action_loss_weight: 1.0
+  diversity_loss_weight: 0.1
+  commitment_loss_weight: 0.25
+  
+  # Data
+  num_train_samples: 10000
+  num_val_samples: 1000
+  seq_len: 10
+  
+  # Logging
+  log_interval: 100
+  checkpoint_interval: 5
+  output_dir: ./outputs
+  
+  # Reproducibility
+  seed: 42
+
+inference:
+  # Generation parameters
+  num_steps: 10
+  temperature: 1.0
+  deterministic: false
+
+hardware:
+  device: auto  # auto, cuda, cpu
+  num_workers: 4
